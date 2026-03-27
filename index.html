@@ -85,7 +85,7 @@
             margin-right: 0px;
         }
 
-        /* BOTÓN CAMBIAR NOMBRE */
+        /* ====================== BOTÓN CAMBIAR NOMBRE ====================== */
         #change-name-btn {
             position: fixed;
             top: 20px;
@@ -107,7 +107,7 @@
             transform: scale(1.08);
         }
 
-        /* MODAL - Alineación corregida */
+        /* Modal */
         #name-modal {
             display: none;
             position: fixed;
@@ -122,7 +122,7 @@
         }
         #modal-content {
             background: white;
-            padding: 35px 30px 30px 30px;   /* padding simétrico */
+            padding: 30px;
             border-radius: 12px;
             border: 3px solid #c59d5f;
             width: 90%;
@@ -131,59 +131,42 @@
             box-shadow: 0 0 25px rgba(197, 157, 95, 0.7);
         }
         #modal-content h3 {
-            margin: 0 0 25px 0;
+            margin: 0 0 20px 0;
             color: #a67c00;
             font-family: 'Playfair Display', serif;
-            font-size: 1.9rem;
         }
         #user-name-input {
             width: 100%;
             padding: 14px;
-            margin: 0 0 25px 0;
+            margin: 15px 0;
             border: 2px solid #c59d5f;
             border-radius: 8px;
             font-size: 17px;
             text-align: center;
-            box-sizing: border-box;           /* importante para alineación */
-        }
-        .modal-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
         }
         .modal-buttons button {
-            padding: 14px 32px;
+            padding: 12px 24px;
+            margin: 0 10px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 1.1rem;
-            min-width: 130px;
-        }
-        .modal-buttons button:first-child {
-            background: #c59d5f;
-            color: white;
-            border: none;
-        }
-        .modal-buttons button:last-child {
-            background: white;
-            color: #c59d5f;
-            border: 2px solid #c59d5f;
         }
     </style>
 </head>
-    <body>
+<body>
     <canvas id="starfield"></canvas>
 
+    <!-- BOTÓN CAMBIAR NOMBRE (ahora fuera del contenedor y fixed) -->
     <button id="change-name-btn" onclick="openNameModal()">Cambiar nombre</button>
 
-    <!-- Modal corregido y alineado -->
+    <!-- Modal -->
     <div id="name-modal">
         <div id="modal-content">
-            <h2>¿Cómo te llamas?</h2>
+            <h3>¿Cómo te llamas?</h3>
             <input type="text" id="user-name-input" placeholder="Ej: Santiago" autocomplete="off" maxlength="30">
-            <div class="modal-buttons">
-                <button onclick="saveUserName()">Guardar</button>
-                <button onclick="closeNameModal()">Cancelar</button>
+            <div class="modal-buttons" style="margin-top:20px;">
+                <button style="background:#c59d5f; color:white; border:none;" onclick="saveUserName()">Guardar</button>
+                <button style="background:white; border:2px solid #c59d5f; color:#c59d5f;" onclick="closeNameModal()">Cancelar</button>
             </div>
         </div>
     </div>
