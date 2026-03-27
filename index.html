@@ -193,10 +193,10 @@
         
         <!-- Fila 1 -->
         <div class="row-1">
-            <button class="button" onclick="copyText('Buenas tardes! Mi nombre es Santiago. Estoy para asistirte con tu consulta.\n \n*Para cotizar tu próxima estadía, por favor indicanos:*\n* Fechas de llegada y salida\n* Cantidad de personas\n* Hotel de preferencia (si la hay) y si buscas con estacionamiento', event)">Bienvenida</button>
-            <button class="button" onclick="copyText('Buenas tardes! Mi nombre es Santiago. Estoy para asistirte con tu consulta.', event)">B2</button>
-            <button class="button" onclick="copyText('Buenas tardes! Mi nombre es Santiago. Estoy para asistirte con tu consulta.\n¿En qué te puedo ayudar?', event)">B3</button>
-            <button class="button" onclick="copyText('Buenas tardes! Mi nombre es Santiago. Estoy para asistirte con tu consulta.\nEnseguida te envío nuestras propuestas.', event)">B4</button>
+            <button class="button" onclick="copyText('¡Hola! Mi nombre es Santiago. Estoy para asistirte con tu consulta.\n \n*Para cotizar tu próxima estadía, por favor indicanos:*\n* Fechas de llegada y salida\n* Cantidad de personas\n* Hotel de preferencia (si la hay) y si buscas con estacionamiento', event)">Bienvenida</button>
+            <button class="button" onclick="copyText('¡Hola! Mi nombre es Santiago. Estoy para asistirte con tu consulta.', event)">B2</button>
+            <button class="button" onclick="copyText('¡Hola! Mi nombre es Santiago. Estoy para asistirte con tu consulta.\n¿En qué te puedo ayudar?', event)">B3</button>
+            <button class="button" onclick="copyText('¡Hola! Mi nombre es Santiago. Estoy para asistirte con tu consulta.\nEnseguida te envío nuestras propuestas.', event)">B4</button>
             <button class="button" onclick="copyText('Es un placer. Quedamos a disposición ante cualquier consulta.', event)">Un placer</button>
             <button class="button" onclick="copyText('A continuación te presento la mejor opción para tu estadía:', event)">BEST</button>
             <button class="button" onclick="copyText('A continuación te presento la cotización solicitada:', event)">PRE</button>
@@ -468,39 +468,6 @@
 
         window.addEventListener('resize', resizeCanvas);
 
-
-        // === TODO LO NUEVO: SALUDO DINÁMICO SEGÚN HORA (internet + fallback) ===
-        let currentGreeting = 'Buenas tardes'; // valor por defecto
-
-        function getGreeting(hour, minute) {
-            const totalMinutes = hour * 60 + minute;
-            if (totalMinutes >= 420 && totalMinutes < 750) return 'Buen día';        // 07:00 - 12:29
-            if (totalMinutes >= 750 && totalMinutes < 1230) return 'Buenas tardes'; // 12:30 - 20:29
-            return 'Buenas noches';                                                   // 20:30 - 06:59
-        }
-
-        async function fetchGreeting() {
-            try {
-                const response = await fetch('https://worldtimeapi.org/api/timezone/America/Argentina/Buenos_Aires');
-                if (!response.ok) throw new Error('API error');
-                const data = await response.json();
-
-                // Extraemos hora y minutos directamente del string local de Argentina (independiente del TZ del navegador)
-                const datetimeStr = data.datetime;
-                const timePart = datetimeStr.split('T')[1].split(/[+-]/)[0];
-                const [hourStr, minuteStr] = timePart.split(':');
-                const hour = parseInt(hourStr, 10);
-                const minute = parseInt(minuteStr, 10);
-
-                currentGreeting = getGreeting(hour, minute);
-                console.log(`🌍 Hora exacta de internet (Argentina): ${hour}:${minute} → ${currentGreeting}!`);
-            } catch (error) {
-                console.warn('⚠️ No se pudo obtener hora de internet → usando hora local del dispositivo', error);
-                const now = new Date();
-                currentGreeting = getGreeting(now.getHours(), now.getMinutes());
-            }
-        }
-
         // === FUNCIÓN COPYTEXT CORREGIDA (¡aquí está la magia!) ===
         function copyText(text, event) {
             let processedText = replaceName(text);                    // ← Nombre dinámico
@@ -544,11 +511,6 @@
 
             const btn = document.getElementById('change-name-btn');
             btn.textContent = `Cambiar nombre (${currentUserName})`;
-
-            // Hora local inmediata + intento de hora exacta de internet
-            const localNow = new Date();
-            currentGreeting = getGreeting(localNow.getHours(), localNow.getMinutes());
-            fetchGreeting();   // ← se ejecuta en segundo plano y corrige si es necesario
         });
     </script>
 </body>
