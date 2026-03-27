@@ -85,7 +85,7 @@
             margin-right: 0px;
         }
 
-        /* BOTÓN CAMBIAR NOMBRE - esquina superior derecha */
+        /* BOTÓN CAMBIAR NOMBRE */
         #change-name-btn {
             position: fixed;
             top: 20px;
@@ -158,10 +158,8 @@
 <body>
     <canvas id="starfield"></canvas>
 
-    <!-- BOTÓN CAMBIAR NOMBRE -->
     <button id="change-name-btn" onclick="openNameModal()">Cambiar nombre</button>
 
-    <!-- Modal para cambiar nombre -->
     <div id="name-modal">
         <div id="modal-content">
             <h3>¿Cómo te llamas?</h3>
@@ -294,7 +292,6 @@
     </div>
 
     <script>
-        // Starfield animation
         const canvas = document.getElementById('starfield');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -353,10 +350,7 @@
                 if (velocityMagnitude > 0.1) {
                     ctx.beginPath();
                     ctx.moveTo(star.x, star.y);
-                    ctx.lineTo(
-                        star.x - star.vx * star.length / velocityMagnitude,
-                        star.y - star.vy * star.length / velocityMagnitude
-                    );
+                    ctx.lineTo(star.x - star.vx * star.length / velocityMagnitude, star.y - star.vy * star.length / velocityMagnitude);
                     ctx.globalAlpha = star.opacity;
                     ctx.stroke();
                 }
@@ -388,7 +382,6 @@
             requestAnimationFrame(animate);
         }
 
-        // ====================== SISTEMA DE NOMBRE ======================
         let currentUserName = localStorage.getItem('gtgUserName') || 'Santiago';
 
         function replaceName(text) {
@@ -406,9 +399,7 @@
                         event.target.textContent = original;
                     }, 1000);
                 }
-            }).catch(err => {
-                console.error('Error al copiar:', err);
-            });
+            }).catch(err => console.error('Error al copiar:', err));
         }
 
         function openNameModal() {
@@ -435,12 +426,9 @@
 
             const btn = document.getElementById('change-name-btn');
             btn.textContent = `Nombre: ${newName}`;
-            setTimeout(() => {
-                btn.textContent = `Cambiar nombre (${newName})`;
-            }, 1800);
+            setTimeout(() => btn.textContent = `Cambiar nombre (${newName})`, 1800);
         }
 
-        // Inicializar todo al cargar la página
         window.addEventListener('load', () => {
             resizeCanvas();
             createStars();
