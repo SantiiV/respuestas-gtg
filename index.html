@@ -420,6 +420,9 @@
         animate();
 
         function copyText(text, event) {
+            let processedText = replaceName(text);                    // ← Nombre dinámico
+            processedText = processedText.replace(/Buenas tardes!/gi, `${currentGreeting}!`); // ← Saludo dinámico
+            
             navigator.clipboard.writeText(text).then(() => {
                 console.log('Text copied successfully');
                 createShootingStars();
