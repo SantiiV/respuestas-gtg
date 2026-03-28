@@ -420,9 +420,6 @@
         animate();
 
         function copyText(text, event) {
-            let processedText = replaceName(text);                    // ← Nombre dinámico
-            processedText = processedText.replace(/Buenas tardes!/gi, `${currentGreeting}!`); // ← Saludo dinámico
-            
             navigator.clipboard.writeText(text).then(() => {
                 console.log('Text copied successfully');
                 createShootingStars();
@@ -433,6 +430,7 @@
 
         // ====================== SISTEMA DE NOMBRE ======================
         let currentUserName = localStorage.getItem('gtgUserName') || 'Santiago';
+
         function replaceName(text) {
             return text.replace(/Mi nombre es Santiago/gi, `Mi nombre es ${currentUserName}`);
         }
@@ -470,48 +468,6 @@
         });
 
         window.addEventListener('resize', resizeCanvas);
-
-        // === FUNCIÓN COPYTEXT CORREGIDA (¡aquí está la magia!) ===
-        function copyText(text, event) {
-            navigator.clipboard.writeText(processedText).then(() => {
-                console.log('✅ Texto copiado correctamente');
-                createShootingStars();
-            }).catch(err => {
-                console.error('❌ Error al copiar:', err);
-            });
-        }
-
-        // === MODAL DE NOMBRE (sin cambios) ===
-        function openNameModal() {
-            document.getElementById('name-modal').style.display = 'flex';
-            const input = document.getElementById('user-name-input');
-            input.value = currentUserName;
-            input.focus();
-            input.select();
-        }
-        function closeNameModal() {
-            document.getElementById('name-modal').style.display = 'none';
-        }
-        function saveUserName() {
-            const newName = document.getElementById('user-name-input').value.trim();
-            if (!newName) { alert('Por favor ingresa tu nombre'); return; }
-            currentUserName = newName;
-            localStorage.setItem('gtgUserName', newName);
-            closeNameModal();
-            const btn = document.getElementById('change-name-btn');
-            btn.textContent = `Nombre: ${newName}`;
-            setTimeout(() => btn.textContent = `Cambiar nombre (${newName})`, 1800);
-        }
-
-        // === INICIO DE LA PÁGINA ===
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            createStars();
-            animate();
-
-            const btn = document.getElementById('change-name-btn');
-            btn.textContent = `Cambiar nombre (${currentUserName})`;
-        });
     </script>
 </body>
 </html>
