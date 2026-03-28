@@ -419,25 +419,27 @@
         createStars();
         animate();
 
+        // ====================== SISTEMA DE NOMBRE (AHORA ANTES DE copyText) ======================
+        let currentUserName = localStorage.getItem('gtgUserName') || 'Santiago';
+    
+        function replaceName(text) {
+            // Versión mejorada: reemplaza CUALQUIER "Mi nombre es XXX" 
+            // (más robusta y funciona aunque cambies el nombre por defecto)
+            console.log(`🔄 replaceName → Nombre actual: ${currentUserName}`);
+            return text.replace(/Mi nombre es \S+/gi, `Mi nombre es ${currentUserName}`);
+        }
+    
         function copyText(text, event) {
-            // Aplicamos el reemplazo del nombre
             const textWithName = replaceName(text);
             
             navigator.clipboard.writeText(textWithName).then(() => {
-                console.log('Texto copiado con el nombre actualizado');
-                createShootingStars();  // efecto de estrellas
+                console.log('✅ Texto COPIADO con nombre actualizado correctamente');
+                createShootingStars();
             }).catch(err => {
-                console.error('Error al copiar: ', err);
+                console.error('❌ Error al copiar:', err);
             });
         }
-
-        // ====================== SISTEMA DE NOMBRE ======================
-        let currentUserName = localStorage.getItem('gtgUserName') || 'Santiago';
-
-        function replaceName(text) {
-            return text.replace(/Mi nombre es Santiago/gi, `Mi nombre es ${currentUserName}`);
-        }
-
+    
         function openNameModal() {
             document.getElementById('name-modal').style.display = 'flex';
             const input = document.getElementById('user-name-input');
@@ -445,23 +447,29 @@
             input.focus();
             input.select();
         }
-
+    
         function closeNameModal() {
             document.getElementById('name-modal').style.display = 'none';
         }
-
+    
         function saveUserName() {
             const newName = document.getElementById('user-name-input').value.trim();
-            if (!newName) { alert('Por favor ingresa tu nombre'); return; }
+            if (!newName) {
+                alert('Por favor ingresa tu nombre');
+                return;
+            }
             currentUserName = newName;
             localStorage.setItem('gtgUserName', newName);
             closeNameModal();
-
+    
             const btn = document.getElementById('change-name-btn');
             btn.textContent = `Nombre: ${newName}`;
-            setTimeout(() => btn.textContent = `Cambiar nombre (${newName})`, 1800);
+            setTimeout(() => {
+                btn.textContent = `Cambiar nombre (${newName})`;
+            }, 1800);
         }
-
+    
+        // Cargar nombre al iniciar
         window.addEventListener('load', () => {
             resizeCanvas();
             createStars();
@@ -469,7 +477,7 @@
             const btn = document.getElementById('change-name-btn');
             btn.textContent = `Cambiar nombre (${currentUserName})`;
         });
-
+    
         window.addEventListener('resize', resizeCanvas);
     </script>
 </body>
