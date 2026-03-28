@@ -426,7 +426,7 @@
             // Versión mejorada: reemplaza CUALQUIER "Mi nombre es XXX" 
             // (más robusta y funciona aunque cambies el nombre por defecto)
             console.log(`🔄 replaceName → Nombre actual: ${currentUserName}`);
-            return text.replace(/Mi nombre es \S+/gi, `Mi nombre es ${currentUserName}`);
+            return text.replace(/Mi nombre es \S+/gi, `Mi nombre es ${currentUserName}.`);
         }
     
         function copyText(text, event) {
