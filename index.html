@@ -420,11 +420,14 @@
         animate();
 
         function copyText(text, event) {
-            navigator.clipboard.writeText(text).then(() => {
-                console.log('Text copied successfully');
-                createShootingStars();
+            // Aplicamos el reemplazo del nombre
+            const textWithName = replaceName(text);
+            
+            navigator.clipboard.writeText(textWithName).then(() => {
+                console.log('Texto copiado con el nombre actualizado');
+                createShootingStars();  // efecto de estrellas
             }).catch(err => {
-                console.error('Failed to copy text: ', err);
+                console.error('Error al copiar: ', err);
             });
         }
 
