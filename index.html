@@ -120,11 +120,19 @@ transform: scale(1.04);
 }
 
 /* ====================== SELECTOR DE IDIOMA ====================== */
-#lang-switcher {
+#top-left-bar {
 position: fixed;
 top: 20px;
 left: 20px;
 z-index: 10000;
+display: flex;
+align-items: flex-start;
+gap: 10px;
+}
+#promos-wrap {
+position: relative;
+}
+#lang-switcher, #promos-box {
 display: flex;
 gap: 6px;
 background: white;
@@ -132,6 +140,41 @@ border: 2px solid #c59d5f;
 border-radius: 8px;
 padding: 5px;
 box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+/* Menú desplegable de PROMOS */
+#promos-menu {
+display: none;
+position: absolute;
+top: calc(100% + 8px);
+left: 0;
+width: 310px;
+max-height: 60vh;
+overflow-y: auto;
+flex-direction: column;
+gap: 2px;
+background: white;
+border: 2px solid #c59d5f;
+border-radius: 8px;
+padding: 5px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+#promos-menu.open {
+display: flex;
+}
+.promo-item {
+border: none;
+background: transparent;
+color: #333;
+text-align: left;
+padding: 8px 10px;
+border-radius: 6px;
+font-weight: bold;
+font-size: 13px;
+cursor: pointer;
+transition: all 0.15s;
+}
+.promo-item:hover {
+background: #f1e6d2;
 }
 .lang-btn {
 border: none;
@@ -273,10 +316,20 @@ display: none;
 <canvas id="starfield"></canvas>
 
 <!-- SELECTOR DE IDIOMA -->
+<div id="top-left-bar">
 <div id="lang-switcher">
 <button class="lang-btn" data-lang="es" onclick="setLanguage('es')">ES</button>
 <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')">PT</button>
 <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+</div>
+
+<!-- SECCIÓN PROMOS -->
+<div id="promos-wrap">
+<div id="promos-box">
+<button class="lang-btn" id="promos-toggle" onclick="togglePromosMenu(event)">PROMOS</button>
+</div>
+<div id="promos-menu"></div>
+</div>
 </div>
 
 <!-- BOTÓN CAMBIAR NOMBRE -->
@@ -487,6 +540,37 @@ cuatro_x_tres: {
 es: "🎉 *¡PROMO 4X3!* 🎉\n \n→ Reservando 4 noches abonás sólo 3 *¡Una noche de regalo!* 🥳\n \n📅 Válido para estadías en Noviembre\n🏨 Disponible en nuestros hoteles Boutique, Bariloche y Tierra Gaucha\n👥 Habitación doble\n💳 Pago únicamente por transferencia bancaria\n📌 No acumulable con otras promociones\n \n_¡Consultanos y aprovechá esta oportunidad para disfrutar en Bariloche!_ 💙",
 pt: "🎉 *¡PROMO 4X3!* 🎉\n \n→ Reservando 4 noches abonás sólo 3 *¡Una noche de regalo!* 🥳\n \n📅 Válido para estadías en Noviembre\n🏨 Disponible en nuestros hoteles Boutique, Bariloche y Tierra Gaucha\n👥 Habitación doble\n💳 Pago únicamente por transferencia bancaria\n📌 No acumulable con otras promociones\n \n_¡Consultanos y aprovechá esta oportunidad para disfrutar en Bariloche!_ 💙",
 en: "🎉 *¡PROMO 4X3!* 🎉\n \n→ Reservando 4 noches abonás sólo 3 *¡Una noche de regalo!* 🥳\n \n📅 Válido para estadías en Noviembre\n🏨 Disponible en nuestros hoteles Boutique, Bariloche y Tierra Gaucha\n👥 Habitación doble\n💳 Pago únicamente por transferencia bancaria\n📌 No acumulable con otras promociones\n \n_¡Consultanos y aprovechá esta oportunidad para disfrutar en Bariloche!_ 💙"
+},
+promo_escapada: {
+es: "✨ *¡PROMO ESCAPADA!* ✨\n \n→ *$122.000 final* por la estadía completa (mínimo 2 noches)\n→ Cada noche extra: *$61.000*\n \n🏨 Disponible en *Tierra Gaucha Hotel Boutique* y *Hotel Bariloche by Tierra Gaucha*\n📅 Para alojarte hasta el 1 de diciembre (válido para feriados)\n👥 Base doble (para triple o cuádruple, consultanos)\n💳 Requiere *pago anticipado del 100%*\n🍳 El desayuno no está incluido en la tarifa; se puede sumar como adicional al reservar o en el check-in\n📌 No acumulable con otras promociones\n \n_¡Consultanos y aprovechá para escaparte a Bariloche!_ 💙"
+},
+promo_ruta23: {
+es: "🚴 *¡DESAFÍO RUTA 23!* 🚴\n \nTarifas especiales para los participantes:\n→ Doble: *$80.000*\n→ Triple: *$120.000*\n→ Cuádruple: *$160.000*\n \n🏨 Hoteles del convenio: *Pioneros Suites* y *M382 Hotel Bariloche*\n💳 *Pago anticipado obligatorio*\n🔒 Contamos con un lugar seguro para guardar las bicicletas\n🍳 El 25/11 ofrecemos un *desayuno buffet adaptado para los corredores, a partir de las 05:00 hs*\n \n_¡Te esperamos para vivir el Desafío!_ 💙"
+},
+promo_marketing: {
+es: "*PROMO PATAGONIA MARKETING SUMMIT 2026*\n(13 y 14 de noviembre)\n \n→ Contamos con un *15% de descuento* en el hospedaje\n💳 Reservando con *pago anticipado*"
+},
+promo_ilter: {
+es: "*TARIFAS ESPECIALES – ILTER OSM*\nCuarta Reunión Internacional de Ciencia Abierta de Investigación Ecológica de Largo Plazo\n📅 Bariloche, del 8 al 12 de marzo de 2027\n \n→ Habitación doble: *$100.000 + IVA*\n→ Habitación triple: *$130.000 + IVA*\n→ Habitación cuádruple: *$155.000 + IVA*\n \n_Los pasajeros extranjeros están exentos del pago de IVA._\n \n🤝 Convenio con la Asociación Argentina de Ecología"
+},
+promo_bna: {
+es: "💳 *PROMO BNA VIAJA +*\n \nPodés financiar tu reserva (total o parcial) con el préstamo de la app *BNA+*. Es 100% digital:\n \n1) Verificá en la app BNA+ si tenés disponible la oferta del préstamo.\n2) *Antes de aceptarla*, escribinos para confirmar la disponibilidad y pasarte la cotización y nuestro *CUIT* (el banco te lo va a solicitar).\n3) Volvé a la app, elegí el monto y el plazo, y completá el formulario con nuestro CUIT. Una vez confirmado, los fondos se acreditan directamente a nosotros.\n \n⚠️ *Importante:*\n→ La reserva formal se realiza una vez que el banco nos confirme la aprobación del préstamo.\n→ La aprobación puede demorar entre *48 y 72 hs*. Durante ese lapso, la tarifa queda congelada.\n→ La promo aplica solo para fechas con disponibilidad suficiente. Si nos quedáramos sin disponibilidad durante la espera del banco, la cotización puede cambiar.\n \n_También podés abonar con link de Mercado Pago en 3 y 6 cuotas sin interés con cualquier tarjeta de crédito._"
+},
+promo_lake: {
+es: "*PROMOS VIGENTES – LAKE APARTMENTS*\n \n💸 *Abonando por transferencia bancaria:*\n→ *10% OFF* en reservas de 5 y 6 noches\n→ *15% OFF* en estadías de 7 noches o más\n \n💳 *Medios de pago:*\n* Transferencia bancaria (Argentina)\n* Tarjeta de débito / crédito (Argentina)\n* Mercado Pago: hasta 6 cuotas sin interés con tarjetas bancarizadas\n \n📌 Para confirmar la reserva se abona el *100% del total*"
+},
+promo_express: {
+es: "⚡ *MODALIDAD EXPRESS* ⚡\n(Tierra Gaucha Hotel Boutique, Hotel Tierra Gaucha y Hotel Bariloche by Tierra Gaucha)\n \n→ Tarifa: *$61.000 final por noche* (base doble). Para base triple, consultanos\n→ Sin mínimo de noches\n \n*Incluye:*\n* Atención por tótem\n* Desayuno Express: café, té, mate cocido, leche, medialunas, selección de panes, mermelada, dulce, manteca y jugo\n* Servicio de limpieza\n \n💳 *Pago 100% anticipado* mediante transferencia, tarjeta de débito o en el hotel (walk-in)\n📌 No acumulable con otras promociones"
+},
+promo_faca: {
+es: "🤝 *CONVENIO FACA & GRUPO TIERRA GAUCHA*\n(Federación Argentina de Colegios de Abogados)\n \n→ *15% de descuento* sobre la tarifa no reembolsable\n🏨 Válido en todos los hoteles de la cadena\n💳 Se abona el *100% anticipado* para confirmar la reserva"
+},
+promo_red_tur: {
+es: "*PROMO ENCUENTRO DE MUNICIPIOS / RED TURÍSTICA*\n📅 26 y 27 de noviembre\n \n→ Doble: *$80.000*\n→ Triple: *$120.000*\n→ Cuádruple: *$160.000*\n \n🏨 En nuestros hoteles 3 estrellas\n💳 *Pago anticipado*"
+},
+promo_suica: {
+es: "*PROMO HOTEL SUÍÇA IGUAÇU*\n(compras superiores a R$ 500)\n \n*Opción A – Pago en cuotas:*\n→ Hasta *6 cuotas sin interés*\n→ De 7 hasta 12 cuotas, con un 10% adicional\n \n*Opción B – Pago anticipado:*\n→ *10% de descuento* abonando únicamente por transferencia bancaria",
+pt: "*PROMOÇÃO HOTEL SUÍÇA IGUAÇU*\n(compras acima de R$ 500)\n \n*Opção A – Parcelado:*\n→ Até *6x sem juros*\n→ De 7 a 12x, com acréscimo de 10%\n \n*Opção B – Pagamento antecipado:*\n→ *10% de desconto* pagando exclusivamente por transferência bancária"
 },
 plaza_info: {
 es: "》En *Hotel Plaza Bariloche* te ofrecemos: Desayuno (tipo buffet), habitación con baño privado, Wi-Fi, TV con cable, ascensor, maletero, servicio de ropa blanca y limpieza diaria.\n \n* Check In: A partir de las 14hs.\n* Check Out: Hasta las 10hs.\n \n》Tarifas válidas por 24hs. Esta cotización no bloquea la disponibilidad. Precios finales con IVA incluido.\n\n*Fotos y ubicación de Hotel Plaza:*\nhttps://hotelplazabariloche.com/galeria/\nhttps://maps.app.goo.gl/wAN2cUAMa1hrQh8R7",
@@ -813,6 +897,7 @@ updateLangButtons();
 updateEsOnlyVisibility();
 assignRowColors();
 updateTitle();
+updatePromosBox();
 }
 
 function updateLangButtons() {
@@ -923,6 +1008,72 @@ btn.addEventListener('mouseenter', () => showPreview(key));
 btn.addEventListener('mouseleave', hidePreview);
 });
 }
+
+
+/* ====================== SECCIÓN PROMOS (menú desplegable) ======================
+   Cada promo tiene su mensaje en MESSAGES (clave promo_*). 'langs' indica en qué
+   idiomas se muestra: si no hay promos para el idioma actual, el cuadro se oculta.
+*/
+const PROMOS_LIST = [
+{ key: 'promo_escapada',  label: 'Escapada $122.000',                 langs: ['es'] },
+{ key: 'promo_ruta23',    label: 'Desafío Ruta 23',                   langs: ['es'] },
+{ key: 'promo_marketing', label: 'Patagonia Marketing Summit',        langs: ['es'] },
+{ key: 'promo_ilter',     label: 'Ecología ILTER (marzo 2027)',       langs: ['es'] },
+{ key: 'promo_bna',       label: 'BNA Viaja +',                       langs: ['es'] },
+{ key: 'promo_lake',      label: 'LAKE (transferencia)',              langs: ['es'] },
+{ key: 'promo_express',   label: 'Modalidad Express (TG1/TG3/TG4)',   langs: ['es'] },
+{ key: 'promo_faca',      label: 'Convenio FACA',                     langs: ['es'] },
+{ key: 'promo_red_tur',   label: 'Encuentro Municipios / Red Turística', langs: ['es'] },
+{ key: 'promo_suica',     label: 'Suíça – Brasileros en Foz',         langs: ['es', 'pt'] }
+];
+
+function buildPromosMenu() {
+const menu = document.getElementById('promos-menu');
+menu.innerHTML = '';
+PROMOS_LIST.filter(p => p.langs.includes(currentLang)).forEach(p => {
+const btn = document.createElement('button');
+btn.className = 'promo-item';
+btn.textContent = p.label;
+btn.addEventListener('click', (e) => {
+e.stopPropagation();
+sendMsg(p.key, e);
+closePromosMenu();
+});
+btn.addEventListener('mouseenter', () => showPreview(p.key));
+btn.addEventListener('mouseleave', hidePreview);
+menu.appendChild(btn);
+});
+}
+
+// Muestra el cuadro PROMOS solo si hay promos disponibles en el idioma actual
+function updatePromosBox() {
+closePromosMenu();
+buildPromosMenu();
+const hasPromos = PROMOS_LIST.some(p => p.langs.includes(currentLang));
+document.getElementById('promos-wrap').style.display = hasPromos ? '' : 'none';
+}
+
+function togglePromosMenu(event) {
+event.stopPropagation();
+const menu = document.getElementById('promos-menu');
+const open = !menu.classList.contains('open');
+menu.classList.toggle('open', open);
+document.getElementById('promos-toggle').classList.toggle('active', open);
+if (!open) hidePreview();
+}
+
+function closePromosMenu() {
+document.getElementById('promos-menu').classList.remove('open');
+document.getElementById('promos-toggle').classList.remove('active');
+hidePreview();
+}
+
+document.addEventListener('click', (e) => {
+if (!e.target.closest('#promos-wrap')) closePromosMenu();
+});
+document.addEventListener('keydown', (e) => {
+if (e.key === 'Escape') closePromosMenu();
+});
 
 /* ====================== MODAL DE NOMBRE ====================== */
 function openNameModal() {
@@ -1069,6 +1220,7 @@ updateEsOnlyVisibility();
 assignRowColors();
 updateTitle();
 setupPreviewHovers();
+updatePromosBox();
 });
 </script>
 
